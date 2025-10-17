@@ -54,6 +54,9 @@ namespace corp_sys
 
                         }
                         break;
+                    default:
+                        Console.WriteLine("Не верный ввод (1 или 2)");
+                        break;
 
                 }
             }
