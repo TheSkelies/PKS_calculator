@@ -12,9 +12,19 @@ namespace corp_sys
             int otvet = 4;
             for (int i = 1; i <= 7; i++)
             {
-                Console.WriteLine($"{i}: Ваше число больше {cur_num}? (да-1, нет-0)");
+                Console.WriteLine($"{i}: Ваше число больше {cur_num}? (да-1, нет-0, 2 - это моё число)");
                 otvet = Convert.ToInt32(Console.ReadLine());
-                if (otvet == 1)
+                if (cur_num == 62 && otvet == 1)
+                {
+                    Console.Write("Вы загадали число: 63");
+                    break;
+                }
+                else if (cur_num == 1 && otvet == 0)
+                {
+                    Console.Write("Вы загадали число: 0");
+                    break;
+                }
+                else if (otvet == 1)
                 {
                     min_num = cur_num;
                     cur_num += (max_num - cur_num) / 2;
@@ -22,22 +32,20 @@ namespace corp_sys
                 else if (otvet == 0)
                 {
                     max_num = cur_num;
-                    cur_num -= (cur_num - min_num)/2;
+                    cur_num -= (cur_num - min_num) / 2;
+                }
+                else if (otvet == 2)
+                {
+                    Console.Write("Вы загадали число: ");
+                    Console.WriteLine(cur_num);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Не правильная операция, завершение программы");
+                    break;
                 }
             }
-            if (otvet == 0 && cur_num == 1)
-            {
-                Console.Write("Вы загадали число: ");
-                Console.WriteLine(0);
-            }
-            else
-            {
-                Console.Write("Вы загадали число: ");
-                Console.WriteLine(max_num);
-            }
-            
-            
-            
         }
     }
 }
