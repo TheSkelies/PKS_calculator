@@ -1,58 +1,34 @@
 using System;
+using System.Drawing;
 
 namespace corp_sys
 {
     class Program
     {
-        static bool can_fit_split(int hCount, int vCount, int wH, int hH, int wV, int hV, int fieldW, int fieldH)
+        static bool CanFit(int n, int a, int b, int w, int h, int d)
         {
-            int colsV;
-            int rowsV;
-            if (hCount == 0)
+            var cols1 = w / (a + 2 * d);
+            var rows1 = h / (b + 2 * d);
+            var cols2 = w / (b + 2 * d);
+            var rows2 = h / (a + 2 * d);
+
+            var fit1 = cols1 * rows1;
+            var fit2 = cols2 * rows2;
+
+            if (fit1 >= n || fit2 >= n)
             {
-                colsV = fieldW / wV;
-                rowsV = fieldH / hV;
-                return colsV * rowsV >= vCount;
+                return true;
             }
 
-            if (vCount == 0)
+            for (var i = 0; i <= cols1; i++)
             {
-                int colsH = fieldW / wH;
-                int rowsH = fieldH / hH;
-                return colsH * rowsH >= hCount;
-            }
-
-            int maxColsH = fieldW / wH;
-            if (maxColsH == 0) 
-            {
-                return false; 
-            }
-
-            int neededRowsH = (hCount + maxColsH - 1) / maxColsH;
-            int heightForH = neededRowsH * hH;
-            int remainingHeight = fieldH - heightForH;
-
-            if (remainingHeight < 0) 
-            {
-                return false;
-            }
-
-            colsV = fieldW / wV;
-            rowsV = remainingHeight / hV;
-
-            return colsV * rowsV >= vCount;
-        }
-
-
-        static bool can_fit(int n, int widthH, int heightH, int widthV, int heightV, int fieldWidth, int fieldHeight)
-        {
-            for (int horiz_count = 0; horiz_count <= n; horiz_count++)
-            {
-                int vert_count = n - horiz_count;
-
-                if (can_fit_split(horiz_count, vert_count, widthH, heightH, widthV, heightV, fieldWidth, fieldHeight))
+                for (var j = 0; j <= rows2; j++)
                 {
-                    return true;
+                    var placed = i * rows1 + j * cols2;
+                    if (placed >= n)
+                    {
+                        return true;
+                    }
                 }
             }
 
@@ -68,9 +44,15 @@ namespace corp_sys
             int moduleWidthV = b + 2 * answer;
             int moduleHeightV = a + 2 * answer;
 
-            bool fits = can_fit(n, moduleWidthH, moduleHeightH, moduleWidthV, moduleHeightV, w, h);
+            var cols1 = w / moduleWidthH;
+            var rows1 = h / moduleHeightH;
+            var cols2 = h / moduleWidthV;
+            var rows2 = h / moduleHeightV;
 
-            while (fits)
+            var fit1 = cols1 * rows1;
+            var fit2 = cols2 * rows2;
+
+            while (CanFit(n, a, b, w, h, answer))
             {
                 answer++;
 
@@ -79,7 +61,7 @@ namespace corp_sys
                 moduleWidthV = b + 2 * answer;
                 moduleHeightV = a + 2 * answer;
 
-                fits = can_fit(n, moduleWidthH, moduleHeightH, moduleWidthV, moduleHeightV, w, h);
+
             }
 
 
