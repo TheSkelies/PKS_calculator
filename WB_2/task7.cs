@@ -39,29 +39,9 @@ namespace corp_sys
         {
             int answer = 0;
 
-            int moduleWidthH = a + 2 * answer;
-            int moduleHeightH = b + 2 * answer;
-            int moduleWidthV = b + 2 * answer;
-            int moduleHeightV = a + 2 * answer;
-
-            var cols1 = w / moduleWidthH;
-            var rows1 = h / moduleHeightH;
-            var cols2 = h / moduleWidthV;
-            var rows2 = h / moduleHeightV;
-
-            var fit1 = cols1 * rows1;
-            var fit2 = cols2 * rows2;
-
             while (CanFit(n, a, b, w, h, answer))
             {
                 answer++;
-
-                moduleWidthH = a + 2 * answer;
-                moduleHeightH = b + 2 * answer;
-                moduleWidthV = b + 2 * answer;
-                moduleHeightV = a + 2 * answer;
-
-
             }
 
 
