@@ -5,46 +5,52 @@ namespace corp_sys
     class Program
     {
 
-        static long reverse_num(long num, long reversed)
+        static long Akkerman(long m, long n)
         {
-            if (num == 0)
+            if (m == 0)
             {
-                return reversed;
+                return n + 1;
             }
-            
-            long digit_to_add = num % 10;
-            long remaining = num / 10;
-
-            return reverse_num(remaining, reversed * 10 + digit_to_add);
+            else if (m > 0 && n == 0)
+            {
+                return Akkerman(m - 1, 1);
+            }
+            else if (m > 0 && n > 0)
+            {
+                return Akkerman(m - 1, Akkerman(m, n - 1));
+            }
+            return 0;
         }
 
         static void Main(string[] args)
         {
-            Console.Write("Введите целое число: ");
-            string input = Console.ReadLine();
+            Console.Write("Введите целое число m: ");
+            string input_m = Console.ReadLine();
+            Console.Write("Введите целое число n: ");
+            string input_n = Console.ReadLine();
 
-            if (input.Contains('.') || input.Contains(','))
+            if (!long.TryParse(input_m, out long m) && !long.TryParse(input_n, out long n))
             {
-                Console.WriteLine("Число должно быть целым");
-            }
-            else if (!long.TryParse(input, out long result))
-            {
-                Console.WriteLine("Ввод содержит не только цифры");
-            }
-            else if (input.Contains("0"))
-            {
-                Console.WriteLine("Число содержит ноль");
+                Console.WriteLine("Не правильный ввод");
             }
             else
             {
-                long num = Convert.ToInt32(input);
+                long m_i = Convert.ToInt32(input_m);
+                long n_i = Convert.ToInt32(input_n);
 
-                long answer = reverse_num(num, 0);
-
-                Console.WriteLine(answer);
-
+                if (m_i < 0 || n_i < 0)
+                {
+                    Console.WriteLine("Нельзя вводить отрицательные числа");
+                }
+                else
+                {
+                    Console.WriteLine($"A(m, n) = {Akkerman(m_i, n_i)}");
+                }
+                    
             }
-            
+
+
+
 
         }
     }
